@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Yajra\Datatables\Datatables;
 use App\Models\Category;
-use DataTables;
+use Validator;
 
 class CategoryController extends Controller
 {
@@ -12,29 +13,60 @@ class CategoryController extends Controller
     {
         if (request()->ajax()) {
             return Datatables::of(Category::orderBy('id')->get())
-                // ->addColumn('action', function($data){
-                //     return '<ul class="icons-list">
-                //                 <li>
-                //                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                //                         <i class="icon-menu9"></i>
-                //                     </a>
-                //                     <ul class="dropdown-menu dropdown-menu-right text-center">
-                //                         <li>
-                //                             <a href="/admin/category-leave/'.$data->id .'/edit"><i class="icon-pencil5 text-primary"></i> Edit</a>
-                //                         </li>
-                //                         <li>
-                //                             <a href="javascript:void(0)" id="delete" data-id="'.$data->id.'"><i class="icon-bin text-danger"></i> Hapus</a>
-                //                         </li>
-                //                     </div>
-                //                 </li>
-                //             </ul>';
-                // })
-                // ->editColumn('type_leave_id', function($drawings) {
-                //     return $drawings->typeLeave->type_leave;
-                // })
+                ->addColumn('action', function($data){
+                    return '<a class="btn btn-success" href="javascript:void(0)" id="edit" data-id="'.$data->id.'">Edit</a>
+                            <a class="btn btn-danger" href="javascript:void(0)" id="delete" data-id="'.$data->id.'">Delete</a>';
+                })
                 ->make(true);
         }
 
         return view('admin.category.index');
+    }
+
+    public function store(Request $request)
+    {
+        $rules = [
+            'name' => 'required'
+        ];
+
+        $error = Validator::make($request->all(), $rules);
+
+        if ($error->fails()) {
+            return response()->json(['errors' => $error->messages()]);
+        }
+
+        Category::create([
+            'name' => $request->name,
+        ]);
+
+        return response()->json(['success' => 'Data Added Successfully']);
+    }
+
+    public function edit(Request $request)
+    {
+        if (request()->ajax()) {
+            $data = Category::findOrFail($request->id);
+            return response()->json(['data' => $data]);
+        }
+    }
+
+    public function update(Request $request)
+    {
+        $rules = [
+            'name' => 'required'
+        ];
+
+        $error = Validator::make($request->all(), $rules);
+
+        if ($error->fails()) {
+            return response()->json(['errors' => $error->messages()]);
+        }
+
+        $category = Category::where('id', $request->hidden_id);
+        $category->update([
+            'name' => $request->name
+        ]);
+
+        return response()->json(['success' => 'Update Data Successfully']);
     }
 }

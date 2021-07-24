@@ -11,31 +11,17 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
-Route::get('/email', function () {
-    return view('email');
-})->name('email');
-
-Route::get('/chat', function () {
-    return view('chat');
-})->name('chat');
-
-Route::get('/datatable', function () {
-    return view('datatable');
-})->name('datatable');
+Route::get('/', 'DashboardController@index')->middleware('auth')->name('dashboard');
+Route::get('/login', 'LoginController@login')->middleware('guest')->name('login');
+Route::post('/login', 'LoginController@credentials')->middleware('guest')->name('credentials');
+Route::get('/logout', 'LoginController@logout')->middleware('auth')->name('logout');
 
 Route::prefix('admin')->group(function () {
-    Route::get('/login', 'LoginController@login')->middleware('guest')->name('admin.login');
-    Route::post('/login', 'LoginController@credentials')->middleware('guest')->name('admin.credentials');
-    Route::get('/logout', 'LoginController@logout')->middleware('auth')->name('admin.logout');
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->middleware('auth')->name('admin.dashboard');
     
     Route::prefix('category')->group(function () {
         Route::get('/index', 'CategoryController@index')->middleware('auth')->name('admin.category.index');
+        Route::post('/store', 'CategoryController@store')->middleware('auth')->name('admin.category.store');
+        Route::post('/edit', 'CategoryController@edit')->middleware('auth')->name('admin.category.edit');
+        Route::post('/update', 'CategoryController@update')->middleware('auth')->name('admin.category.update');
     });
 });

@@ -91,8 +91,9 @@
     <script src="{{asset('asset/app-assets/js/core/app.js')}}"></script>
     <!-- END: Theme JS-->
 
-    <!-- BEGIN: Page JS-->
-    <!-- END: Page JS-->
+    <!-- BEGIN: Bootbox JS-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.4.0/bootbox.min.js"></script>
+    <!-- END: Bootbox JS-->
 
     <script>
         $(window).on('load', function() {
