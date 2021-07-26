@@ -7,7 +7,7 @@
                         <span class="user-name font-weight-bolder">{{auth()->user()->name}}</span>
                         <span class="user-status">{{auth()->user()->email}}</span>
                     </div>
-                    <span class="avatar"><img class="round" src="{{asset('asset/app-assets/images/portrait/small/avatar-s-11.jpg')}}" alt="avatar" height="40" width="40"><span class="avatar-status-online"></span></span>
+                    <span class="avatar"><img class="round" src="{{asset('asset/app-assets/images/avatar.png')}}" alt="avatar" height="40" width="40"><span class="avatar-status-online"></span></span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown-user">
                     <a class="dropdown-item" href="#"><i class="mr-50" data-feather="user"></i> Profile</a>

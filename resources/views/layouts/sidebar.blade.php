@@ -30,13 +30,13 @@
 
             <li class=" nav-item"><a class="d-flex align-items-center" href="#"><i data-feather="user"></i><span class="menu-title text-truncate" data-i18n="User">User Config</span></a>
                 <ul class="menu-content">
-                    <li>
-                        <a class="d-flex align-items-center" href="#">
+                    <li class="{{request()->is('admin/role/*') ? 'active' : ''}}">
+                        <a class="d-flex align-items-center" href="{{route('admin.role.index')}}">
                             <i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="Role">Role</span>
                         </a>
                     </li>
-                    <li>
-                        <a class="d-flex align-items-center" href="#">
+                    <li class="{{request()->is('admin/user/*') ? 'active' : ''}}">
+                        <a class="d-flex align-items-center" href="{{route('admin.user.index')}}">
                             <i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="User Admin">User Admin</span>
                         </a>
                     </li>

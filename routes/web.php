@@ -34,4 +34,22 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
         Route::post('/update', 'PointOfInterestController@update')->name('admin.poi.update');
         Route::post('/destroy', 'PointOfInterestController@destroy')->name('admin.poi.destroy');
     });
+
+    // role
+    Route::prefix('role')->group(function () {
+        Route::get('/index', 'RoleController@index')->name('admin.role.index');
+        Route::post('/store', 'RoleController@store')->name('admin.role.store');
+        Route::post('/edit', 'RoleController@edit')->name('admin.role.edit');
+        Route::post('/update', 'RoleController@update')->name('admin.role.update');
+        Route::post('/destroy', 'RoleController@destroy')->name('admin.role.destroy');
+    });
+
+    // user admin
+    Route::prefix('user')->group(function () {
+        Route::get('/index', 'UserController@index')->name('admin.user.index');
+        Route::post('/store', 'UserController@store')->name('admin.user.store');
+        Route::post('/edit', 'UserController@edit')->name('admin.user.edit');
+        Route::post('/update', 'UserController@update')->name('admin.user.update');
+        Route::post('/destroy', 'UserController@destroy')->name('admin.user.destroy');
+    });
 });

@@ -1,7 +1,7 @@
 @extends('layouts.index')
 
 @section('title')
-    Category
+    User Admin
 @endsection
 
 @section('content')
@@ -27,11 +27,12 @@
         <div class="content-header-left col-md-9 col-12 mb-2">
             <div class="row breadcrumbs-top">
                 <div class="col-12">
-                    <h2 class="content-header-title float-left mb-0">Category</h2>
+                    <h2 class="content-header-title float-left mb-0">User Admin</h2>
                     <div class="breadcrumb-wrapper">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="{{route('dashboard')}}">Dashboard</a></li>
-                            <li class="breadcrumb-item active">Category</li>
+                            <li class="breadcrumb-item">User</li>
+                            <li class="breadcrumb-item active">User Admin</li>
                         </ol>
                     </div>
                 </div>
@@ -50,6 +51,8 @@
                                 <tr>
                                     <th>Id</th>
                                     <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Role</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -60,7 +63,7 @@
             <!-- Modal to add new record -->
             <div class="modal modal-slide-in fade" id="form-modal">
                 <div class="modal-dialog sidebar-sm">
-                    <form class="add-new-record modal-content pt-0" id="form-category">
+                    <form class="add-new-record modal-content pt-0" id="form-user">
                         <input type="hidden" name="hidden_id" id="hidden_id" />
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">×</button>
                         <div class="modal-header mb-1">
@@ -71,6 +74,26 @@
                                 <label class="form-label" for="name">Name</label>
                                 <input type="text" class="form-control name_error" id="name" name="name" placeholder="Name" aria-label="Name" />
                                 <div class="invalid-feedback" id="name_error"></div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="email">Email</label>
+                                <input type="email" class="form-control email_error" id="email" name="email" placeholder="Email" aria-label="Email" />
+                                <div class="invalid-feedback" id="email_error"></div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="password">Password</label>
+                                <input type="password" class="form-control password_error" id="password" name="password" placeholder="Password" aria-label="Password" />
+                                <div class="invalid-feedback" id="password_error"></div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="role_id">Role</label>
+                                <select name="role_id" id="role_id" class="form-control role_id_error">
+                                    <option value="" selected disabled>Choose Role</option>
+                                    @foreach ($roles as $role)
+                                        <option value="{{$role->id}}">{{$role->name}}</option>
+                                    @endforeach
+                                </select>
+                                <div class="invalid-feedback" id="role_id_error"></div>
                             </div>
                             <button type="submit" class="btn btn-primary data-submit mr-1">Add</button>
                             <button type="button" class="btn btn-outline-secondary btn-cancel" data-dismiss="modal">Cancel</button>
@@ -103,7 +126,7 @@
                 bLengthChange: true,
                 pageLength: 10,
                 ajax: {
-                    url: "{{route('admin.category.index')}}",
+                    url: "{{route('admin.user.index')}}",
                 },
                 columns: [
                     {data: "id", render: function (data, type, row, meta) {
@@ -111,12 +134,14 @@
                         },
                     },
                     {data: "name", name: "name", orderable: false},
+                    {data: "email", name: "email", orderable: false},
+                    {data: "role_id", name: "role_id", orderable: false},
                     {data: "action", name: "action", orderable: false},
                 ],
                 columnDefs: [
                     { width: "10%", "targets": [0] },
-                    { width: "25%", "targets": [2] },
-                    { className: "text-center", "targets": [2] },
+                    { width: "25%", "targets": [4] },
+                    { className: "text-center", "targets": [4] },
                 ]
             });
             
@@ -128,11 +153,11 @@
         })
 
         //submit form
-        $('#form-category').on('submit', function (e) {
+        $('#form-user').on('submit', function (e) {
             e.preventDefault();
             if ($('.data-submit').text() == 'Add') {
                 $.ajax({
-                    url: "{{ route('admin.category.store') }}",
+                    url: "{{ route('admin.user.store') }}",
                     method: "POST",
                     data: new FormData(this),
                     contentType: false,
@@ -149,7 +174,7 @@
                         }
                         if (data.success) {
                             $('#form-modal').modal('hide');
-                            $('#form-category')[0].reset();
+                            $('#form-user')[0].reset();
                             bootbox.alert({
                                 message: "Save data has been successfully",
                                 callback: function () {
@@ -168,14 +193,14 @@
                               }
                         });
                         $('#form-modal').modal('hide');
-                        $('#form-category')[0].reset();
+                        $('#form-user')[0].reset();
                     }
                 })
             }
 
             if ($('.data-submit').text() == 'Edit') {
                 $.ajax({
-                    url: "{{ route('admin.category.update') }}",
+                    url: "{{ route('admin.user.update') }}",
                     method: "POST",
                     data: new FormData(this),
                     contentType: false,
@@ -192,7 +217,7 @@
                       }
                       if (data.success) {
                           $('#form-modal').modal('hide');
-                          $('#form-category')[0].reset();
+                          $('#form-user')[0].reset();
                           bootbox.alert({
                               message: "Update data has been successfully",
                               callback: function () {
@@ -211,7 +236,7 @@
                               }
                         });
                         $('#form-modal').modal('hide');
-                        $('#form-category')[0].reset();
+                        $('#form-user')[0].reset();
                     }
                 })
             }
@@ -222,13 +247,14 @@
             var id = $(this).attr('data-id');
             
             $.ajax({
-                url: "{{ route('admin.category.edit') }}",
+                url: "{{ route('admin.user.edit') }}",
                 method: "POST",
                 data: {id:id},
                 success: function (resp) {
                     console.log(resp);
                     $('#hidden_id').val(resp.data.id);
                     $('#name').val(resp.data.name);
+                    $('#role_id').val(resp.data.role_id);
                     $('.modal-title').text('Edit Record');
                     $('.data-submit').text('Edit');
                     $('#form-modal').modal('show');
@@ -243,7 +269,7 @@
             bootbox.confirm("Are you sure to delete this data ?", function(result) {
                 if (result) {
                     $.ajax({
-                        url: "{{ route('admin.category.destroy') }}",
+                        url: "{{ route('admin.user.destroy') }}",
                         method: "POST",
                         data: {id:id},
                         success: function (resp) {
