@@ -16,12 +16,22 @@ Route::get('/login', 'LoginController@login')->middleware('guest')->name('login'
 Route::post('/login', 'LoginController@credentials')->middleware('guest')->name('credentials');
 Route::get('/logout', 'LoginController@logout')->middleware('auth')->name('logout');
 
-Route::prefix('admin')->group(function () {
-    
+Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
+    // category
     Route::prefix('category')->group(function () {
-        Route::get('/index', 'CategoryController@index')->middleware('auth')->name('admin.category.index');
-        Route::post('/store', 'CategoryController@store')->middleware('auth')->name('admin.category.store');
-        Route::post('/edit', 'CategoryController@edit')->middleware('auth')->name('admin.category.edit');
-        Route::post('/update', 'CategoryController@update')->middleware('auth')->name('admin.category.update');
+        Route::get('/index', 'CategoryController@index')->name('admin.category.index');
+        Route::post('/store', 'CategoryController@store')->name('admin.category.store');
+        Route::post('/edit', 'CategoryController@edit')->name('admin.category.edit');
+        Route::post('/update', 'CategoryController@update')->name('admin.category.update');
+        Route::post('/destroy', 'CategoryController@destroy')->name('admin.category.destroy');
+    });
+
+    // point of interest
+    Route::prefix('poi')->group(function () {
+        Route::get('/index', 'PointOfInterestController@index')->name('admin.poi.index');
+        Route::post('/store', 'PointOfInterestController@store')->name('admin.poi.store');
+        Route::post('/edit', 'PointOfInterestController@edit')->name('admin.poi.edit');
+        Route::post('/update', 'PointOfInterestController@update')->name('admin.poi.update');
+        Route::post('/destroy', 'PointOfInterestController@destroy')->name('admin.poi.destroy');
     });
 });

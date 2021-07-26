@@ -22,6 +22,11 @@
                     <i data-feather="list"></i><span class="menu-title text-truncate" data-i18n="Category">Category</span>
                 </a>
             </li>
+            <li class=" nav-item {{request()->is('admin/poi/*') ? 'active' : ''}}">
+                <a class="d-flex align-items-center" href="{{route('admin.poi.index')}}">
+                    <i data-feather="list"></i><span class="menu-title text-truncate" data-i18n="Point Of Interest">Point Of Interest</span>
+                </a>
+            </li>
 
             <li class=" nav-item"><a class="d-flex align-items-center" href="#"><i data-feather="user"></i><span class="menu-title text-truncate" data-i18n="User">User Config</span></a>
                 <ul class="menu-content">
