@@ -4,15 +4,15 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Yajra\Datatables\Datatables;
-use App\Models\Category;
+use App\Models\Role;
 use Validator;
 
-class CategoryController extends Controller
+class RoleController extends Controller
 {
     public function index(Request $request)
     {
         if (request()->ajax()) {
-            return Datatables::of(Category::orderBy('id')->get())
+            return Datatables::of(Role::orderBy('id')->get())
                 ->addColumn('action', function($data){
                     return '<a class="btn btn-success" href="javascript:void(0)" id="edit" data-id="'.$data->id.'">Edit</a>
                             <a class="btn btn-danger" href="javascript:void(0)" id="delete" data-id="'.$data->id.'">Delete</a>';
@@ -20,7 +20,7 @@ class CategoryController extends Controller
                 ->make(true);
         }
 
-        return view('admin.category.index');
+        return view('admin.role.index');
     }
 
     public function store(Request $request)
@@ -35,8 +35,9 @@ class CategoryController extends Controller
             return response()->json(['errors' => $error->messages()]);
         }
 
-        Category::create([
+        Role::create([
             'name' => $request->name,
+            'description' => $request->description
         ]);
 
         return response()->json(['success' => 'Data Added Successfully']);
@@ -45,7 +46,7 @@ class CategoryController extends Controller
     public function edit(Request $request)
     {
         if (request()->ajax()) {
-            $data = Category::findOrFail($request->id);
+            $data = Role::findOrFail($request->id);
             return response()->json(['data' => $data]);
         }
     }
@@ -62,9 +63,10 @@ class CategoryController extends Controller
             return response()->json(['errors' => $error->messages()]);
         }
 
-        $category = Category::where('id', $request->hidden_id);
-        $category->update([
-            'name' => $request->name
+        $role = Role::where('id', $request->hidden_id);
+        $role->update([
+            'name' => $request->name,
+            'description' => $request->description
         ]);
 
         return response()->json(['success' => 'Update Data Successfully']);
@@ -72,7 +74,7 @@ class CategoryController extends Controller
 
     public function destroy(Request $request)
     {
-        $data = Category::where('id', $request->id);
+        $data = Role::where('id', $request->id);
         $data->delete();
 
         return response()->json(['success' => 'Delete Data Successfully']);
