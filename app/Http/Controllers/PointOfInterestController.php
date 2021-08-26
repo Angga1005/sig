@@ -20,6 +20,9 @@ class PointOfInterestController extends Controller
                     return '<a class="btn btn-success" href="javascript:void(0)" id="edit" data-id="'.$data->id.'">Edit</a>
                             <a class="btn btn-danger" href="javascript:void(0)" id="delete" data-id="'.$data->id.'">Delete</a>';
                 })
+                ->editColumn('category_id', function($drawings) {
+                    return $drawings->category->name;
+                })
                 ->make(true);
         }
 

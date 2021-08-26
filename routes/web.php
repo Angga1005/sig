@@ -52,4 +52,6 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
         Route::post('/update', 'UserController@update')->name('admin.user.update');
         Route::post('/destroy', 'UserController@destroy')->name('admin.user.destroy');
     });
+
+    Route::post('/get-location', 'DashboardController@getLocation')->name('admin.getLocation');
 });

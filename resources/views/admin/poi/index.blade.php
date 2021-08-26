@@ -49,6 +49,7 @@
                             <thead>
                                 <tr>
                                     <th>Id</th>
+                                    <th>Kategori</th>
                                     <th>Name</th>
                                     <th>Address</th>
                                     <th>Longitude</th>
@@ -138,6 +139,7 @@
                             return meta.row + meta.settings._iDisplayStart + 1;
                         },
                     },
+                    {data: "category_id", name: "category_id", orderable: false},
                     {data: "name", name: "name", orderable: false},
                     {data: "address", name: "address", orderable: false},
                     {data: "longitude", name: "longitude", orderable: false},
@@ -145,9 +147,9 @@
                     {data: "action", name: "action", orderable: false},
                 ],
                 columnDefs: [
-                    { width: "10%", "targets": [0] },
-                    { width: "25%", "targets": [5] },
-                    { className: "text-center", "targets": [5] },
+                    { width: "5%", "targets": [0] },
+                    { width: "25%", "targets": [6] },
+                    { className: "text-center", "targets": [6] },
                 ]
             });
             
