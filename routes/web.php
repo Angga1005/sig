@@ -15,6 +15,8 @@ Route::get('/', 'DashboardController@index')->middleware('auth')->name('dashboar
 Route::get('/login', 'LoginController@login')->middleware('guest')->name('login');
 Route::post('/login', 'LoginController@credentials')->middleware('guest')->name('credentials');
 Route::get('/logout', 'LoginController@logout')->middleware('auth')->name('logout');
+Route::get('/register', 'LoginController@register')->middleware('guest')->name('register');
+Route::post('/register', 'LoginController@registerStore')->middleware('guest')->name('register.store');
 
 Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
     // category

@@ -88,19 +88,26 @@
                         <!-- Login-->
                         <div class="d-flex col-lg-4 align-items-center auth-bg px-2 p-lg-5">
                             <div class="col-12 col-sm-8 col-md-6 col-lg-12 px-xl-2 mx-auto">
-                                <h2 class="card-title font-weight-bold mb-1">Welcome to ! 👋</h2>
-                                <p class="card-text mb-2">Please sign-in to your account</p>
+                                {{-- <h2 class="card-title font-weight-bold mb-1">Welcome to ! 👋</h2> --}}
+                                <p class="card-text mb-2">Please input data for register account</p>
                                 @if ($message = Session::get('success'))
                                     <span class="text-success">{{$message}}</span>                       
                                 @endif
                                 @if($errors->any('error'))
                                     <span class="text-danger">{{$errors->first('error')}}</span>
                                 @endif
-                                <form class="auth-login-form mt-2" action="{{ route('credentials') }}" method="POST">
+                                <form class="auth-login-form mt-2" action="{{ route('register.store') }}" method="POST">
                                     @csrf
                                     <div class="form-group">
-                                        <label class="form-label" for="login-email">Email</label>
-                                        <input class="form-control" id="login-email" type="text" name="email" placeholder="Email" aria-describedby="login-email" autofocus="" tabindex="1" />
+                                        <label class="form-label" for="register-email">Name</label>
+                                        <input class="form-control" id="register-email" type="text" name="name" placeholder="Name" aria-describedby="register-name" autofocus="" tabindex="1" />
+                                        @if ($errors->any('name'))
+                                            <span class="text-danger">{{ $errors->first('name') }}</span>
+                                        @endif
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label" for="register-email">Email</label>
+                                        <input class="form-control" id="register-email" type="email" name="email" placeholder="Email" aria-describedby="register-email" autofocus="" tabindex="2" />
                                         @if ($errors->any('email'))
                                             <span class="text-danger">{{ $errors->first('email') }}</span>
                                         @endif
@@ -110,18 +117,15 @@
                                             <label for="login-password">Password</label>
                                         </div>
                                         <div class="input-group input-group-merge form-password-toggle">
-                                            <input class="form-control form-control-merge" id="login-password" type="password" name="password" placeholder="Password" aria-describedby="login-password" tabindex="2" />
+                                            <input class="form-control form-control-merge" id="login-password" type="password" name="password" placeholder="Password" aria-describedby="register-password" tabindex="3" />
                                             <div class="input-group-append"><span class="input-group-text cursor-pointer"><i data-feather="eye"></i></span></div>
                                         </div>
                                         @if ($errors->any('password'))
                                             <span class="text-danger">{{ $errors->first('password') }}</span>
                                         @endif
                                     </div>
-                                    <button class="btn btn-primary btn-block" tabindex="4">Sign in</button>
+                                    <button class="btn btn-primary btn-block" tabindex="4">Register</button>
                                 </form>
-                                <div style="margin-top: 12px;">
-                                    <a href="{{route('register')}}">Buat akun sebagai instansi</a>
-                                </div>
                             </div>
                         </div>
                         <!-- /Login-->

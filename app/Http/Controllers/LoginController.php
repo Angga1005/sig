@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers;
+use App\Models\User;
+use Validator;
 use Auth;
 
 class LoginController extends Controller
@@ -33,5 +36,34 @@ class LoginController extends Controller
         Auth::logout();
 
         return redirect()->route('dashboard');;
+    }
+
+    public function register()
+    {
+        return view('register');
+    }
+
+    public function registerStore(Request $request)
+    {
+        $rules = [
+            'name' => 'required',
+            'email' => 'required',
+            'password' => 'required'
+        ];
+
+        $error = Validator::make($request->all(), $rules);
+
+        if ($error->fails()) {
+            return response()->json(['errors' => $error->messages()]);
+        }
+
+        User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'role_id' => 2
+        ]);
+
+        return redirect()->route('login')->with('success','Berhasil register akun!');
     }
 }
