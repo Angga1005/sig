@@ -10,6 +10,7 @@ class PointOfInterest extends Model
     protected $fillable = [
         'name',
         'address',
+        'phone',
         'longitude',
         'latitude',
         'category_id',

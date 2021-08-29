@@ -94,6 +94,7 @@
                             <div class="form-group">
                                 <label class="form-label" for="phone">Phone</label>
                                 <input type="text" class="form-control phone_error" id="phone" name="phone" placeholder="Phone" aria-label="Phone" />
+                                <p style="font-size: 8pt;"> example: 6282316576231</p>
                                 <div class="invalid-feedback" id="phone_error"></div>
                             </div>
                             <div class="form-group">

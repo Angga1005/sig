@@ -126,6 +126,9 @@
                                     </div>
                                     <button class="btn btn-primary btn-block" tabindex="4">Register</button>
                                 </form>
+                                <div style="margin-top: 12px;">
+                                    <a href="{{route('login')}}">Login</a>
+                                </div>
                             </div>
                         </div>
                         <!-- /Login-->

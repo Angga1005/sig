@@ -57,6 +57,7 @@ class PointOfInterestController extends Controller
         PointOfInterest::create([
             'name' => $request->name,
             'address' => $request->address,
+            'phone' => $request->phone,
             'longitude' => $request->longitude,
             'latitude' => $request->latitude,
             'category_id' => $request->category_id,
