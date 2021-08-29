@@ -42,6 +42,7 @@ class PointOfInterestController extends Controller
         $rules = [
             'name' => 'required',
             'address' => 'required',
+            'phone' => 'required',
             'longitude' => 'required',
             'latitude' => 'required',
             'category_id' => 'required'
@@ -76,7 +77,11 @@ class PointOfInterestController extends Controller
     public function update(Request $request)
     {
         $rules = [
-            'name' => 'required'
+            'name' => 'required',
+            'address' => 'required',
+            'phone' => 'required',
+            'longitude' => 'required',
+            'latitude' => 'required'
         ];
 
         $error = Validator::make($request->all(), $rules);
@@ -89,8 +94,10 @@ class PointOfInterestController extends Controller
         $category->update([
             'name' => $request->name,
             'address' => $request->address,
+            'phone' => $request->phone,
             'longitude' => $request->longitude,
-            'latitude' => $request->latitude
+            'latitude' => $request->latitude,
+            'category_id' => $request->category_id
         ]);
 
         return response()->json(['success' => 'Update Data Successfully']);

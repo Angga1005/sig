@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddFieldCreatedByToPointOfInterestTable extends Migration
+class AddFieldPhoneToPointOfInterestTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,9 +14,7 @@ class AddFieldCreatedByToPointOfInterestTable extends Migration
     public function up()
     {
         Schema::table('point_of_interest', function (Blueprint $table) {
-            $table->unsignedBigInteger('created_by')->nullable();
-            $table->foreign('created_by')->references('id')->on('users')
-                    ->onDelete('cascade')->onUpdate('cascade');
+            $table->string('phone');
         });
     }
 
@@ -28,7 +26,7 @@ class AddFieldCreatedByToPointOfInterestTable extends Migration
     public function down()
     {
         Schema::table('point_of_interest', function (Blueprint $table) {
-            $table->dropColumn('created_by');
+            $table->dropColumn('phone');
         });
     }
 }

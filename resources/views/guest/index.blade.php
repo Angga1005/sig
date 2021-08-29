@@ -131,7 +131,7 @@
                     $.each(resp.data, function(key, value) {
                         // console.log(value)
                         var marker = L.marker([value.longitude, value.latitude]).addTo(mymap);
-                        marker.bindPopup('<b>'+value.name+'.</b><br>'+value.address+'<br><a href="https://wa.me/6282126926506/?text=Hallo admin">Contact</a>');
+                        marker.bindPopup('<b>'+value.name+'.</b><br>'+value.address+'<br><a href="https://wa.me/'+value.phone+'/?text=Hallo admin" target="_blank">Contact</a>');
                     });
                 }
             })

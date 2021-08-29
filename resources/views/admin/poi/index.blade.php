@@ -92,6 +92,11 @@
                                 <div class="invalid-feedback" id="address_error"></div>
                             </div>
                             <div class="form-group">
+                                <label class="form-label" for="phone">Phone</label>
+                                <input type="text" class="form-control phone_error" id="phone" name="phone" placeholder="Phone" aria-label="Phone" />
+                                <div class="invalid-feedback" id="phone_error"></div>
+                            </div>
+                            <div class="form-group">
                                 <label class="form-label" for="longitude">Longitude</label>
                                 <input type="text" class="form-control longlat longitude_error" id="longitude" name="longitude" placeholder="Longitude" aria-label="Longitude" />
                                 <div class="invalid-feedback" id="longitude_error"></div>
@@ -264,8 +269,9 @@
                     $('#category_id').val(resp.data.category_id);
                     $('#name').val(resp.data.name);
                     $('#address').val(resp.data.address);
-                    $('#longitude').val(resp.data.latitude);
-                    $('#latitude').val(resp.data.longitude);
+                    $('#phone').val(resp.data.phone);
+                    $('#longitude').val(resp.data.longitude);
+                    $('#latitude').val(resp.data.latitude);
                     $('.modal-title').text('Edit Record');
                     $('.data-submit').text('Edit');
                     $('#form-modal').modal('show');
@@ -307,6 +313,10 @@
                 !(e.which >= 48 && e.which <= 57)) {
                 return false;
             }
+        });
+
+        $('#phone').on("input", function() {
+            this.value = this.value.replace(/\D/g,'');
         });
     </script>
 @endsection
