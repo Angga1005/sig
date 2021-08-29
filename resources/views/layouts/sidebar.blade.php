@@ -12,36 +12,40 @@
             <li class=" navigation-header">
                 <span data-i18n="Apps &amp; Pages">Apps &amp; Pages</span><i data-feather="more-horizontal"></i>
             </li>
-            <li class=" nav-item {{request()->is('/') ? 'active' : ''}}">
-                <a class="d-flex align-items-center" href="{{route('dashboard')}}">
+            <li class=" nav-item {{request()->is('admin/dashboard') ? 'active' : ''}}">
+                <a class="d-flex align-items-center" href="{{route('admin.dashboard')}}">
                     <i data-feather="home"></i><span class="menu-title text-truncate" data-i18n="Dashboard">Dashboard</span>
                 </a>
             </li>
-            <li class=" nav-item {{request()->is('admin/category/*') ? 'active' : ''}}">
-                <a class="d-flex align-items-center" href="{{route('admin.category.index')}}">
-                    <i data-feather="list"></i><span class="menu-title text-truncate" data-i18n="Category">Category</span>
-                </a>
-            </li>
+            @if (auth()->user()->role_id == 1)
+                <li class=" nav-item {{request()->is('admin/category/*') ? 'active' : ''}}">
+                    <a class="d-flex align-items-center" href="{{route('admin.category.index')}}">
+                        <i data-feather="list"></i><span class="menu-title text-truncate" data-i18n="Category">Category</span>
+                    </a>
+                </li>
+            @endif
             <li class=" nav-item {{request()->is('admin/poi/*') ? 'active' : ''}}">
                 <a class="d-flex align-items-center" href="{{route('admin.poi.index')}}">
                     <i data-feather="list"></i><span class="menu-title text-truncate" data-i18n="Point Of Interest">Point Of Interest</span>
                 </a>
             </li>
 
-            <li class=" nav-item"><a class="d-flex align-items-center" href="#"><i data-feather="user"></i><span class="menu-title text-truncate" data-i18n="User">User Config</span></a>
-                <ul class="menu-content">
-                    <li class="{{request()->is('admin/role/*') ? 'active' : ''}}">
-                        <a class="d-flex align-items-center" href="{{route('admin.role.index')}}">
-                            <i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="Role">Role</span>
-                        </a>
-                    </li>
-                    <li class="{{request()->is('admin/user/*') ? 'active' : ''}}">
-                        <a class="d-flex align-items-center" href="{{route('admin.user.index')}}">
-                            <i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="User Admin">User Admin</span>
-                        </a>
-                    </li>
-                </ul>
-            </li>
+            @if (auth()->user()->role_id == 1)
+                <li class=" nav-item"><a class="d-flex align-items-center" href="#"><i data-feather="user"></i><span class="menu-title text-truncate" data-i18n="User">User Config</span></a>
+                    <ul class="menu-content">
+                        <li class="{{request()->is('admin/role/*') ? 'active' : ''}}">
+                            <a class="d-flex align-items-center" href="{{route('admin.role.index')}}">
+                                <i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="Role">Role</span>
+                            </a>
+                        </li>
+                        <li class="{{request()->is('admin/user/*') ? 'active' : ''}}">
+                            <a class="d-flex align-items-center" href="{{route('admin.user.index')}}">
+                                <i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="User Admin">User Admin</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            @endif
         </ul>
     </div>
 </div>

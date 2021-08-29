@@ -30,7 +30,7 @@
                     <h2 class="content-header-title float-left mb-0">Point Of Interest</h2>
                     <div class="breadcrumb-wrapper">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="{{route('dashboard')}}">Dashboard</a></li>
+                            <li class="breadcrumb-item"><a href="{{route('admin.dashboard')}}">Dashboard</a></li>
                             <li class="breadcrumb-item active">Point Of Interest</li>
                         </ol>
                     </div>
@@ -49,6 +49,7 @@
                             <thead>
                                 <tr>
                                     <th>Id</th>
+                                    <th>Kategori</th>
                                     <th>Name</th>
                                     <th>Address</th>
                                     <th>Longitude</th>
@@ -89,6 +90,12 @@
                                 <label class="form-label" for="address">Address</label>
                                 <input type="text" class="form-control address_error" id="address" name="address" placeholder="Address" aria-label="Address" />
                                 <div class="invalid-feedback" id="address_error"></div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="phone">Phone</label>
+                                <input type="text" class="form-control phone_error" id="phone" name="phone" placeholder="Phone" aria-label="Phone" />
+                                <p style="font-size: 8pt;"> example: 6282316576231</p>
+                                <div class="invalid-feedback" id="phone_error"></div>
                             </div>
                             <div class="form-group">
                                 <label class="form-label" for="longitude">Longitude</label>
@@ -138,6 +145,7 @@
                             return meta.row + meta.settings._iDisplayStart + 1;
                         },
                     },
+                    {data: "category_id", name: "category_id", orderable: false},
                     {data: "name", name: "name", orderable: false},
                     {data: "address", name: "address", orderable: false},
                     {data: "longitude", name: "longitude", orderable: false},
@@ -145,9 +153,9 @@
                     {data: "action", name: "action", orderable: false},
                 ],
                 columnDefs: [
-                    { width: "10%", "targets": [0] },
-                    { width: "25%", "targets": [5] },
-                    { className: "text-center", "targets": [5] },
+                    { width: "5%", "targets": [0] },
+                    { width: "25%", "targets": [6] },
+                    { className: "text-center", "targets": [6] },
                 ]
             });
             
@@ -262,8 +270,9 @@
                     $('#category_id').val(resp.data.category_id);
                     $('#name').val(resp.data.name);
                     $('#address').val(resp.data.address);
-                    $('#longitude').val(resp.data.latitude);
-                    $('#latitude').val(resp.data.longitude);
+                    $('#phone').val(resp.data.phone);
+                    $('#longitude').val(resp.data.longitude);
+                    $('#latitude').val(resp.data.latitude);
                     $('.modal-title').text('Edit Record');
                     $('.data-submit').text('Edit');
                     $('#form-modal').modal('show');
@@ -305,6 +314,10 @@
                 !(e.which >= 48 && e.which <= 57)) {
                 return false;
             }
+        });
+
+        $('#phone').on("input", function() {
+            this.value = this.value.replace(/\D/g,'');
         });
     </script>
 @endsection
