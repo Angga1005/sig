@@ -11,7 +11,8 @@
 |
 */
 
-Route::get('/', 'DashboardController@index')->middleware('auth')->name('dashboard');
+Route::get('/', 'GuestController@index')->name('guest.index');
+Route::post('/get-location', 'GuestController@getLocation')->name('guest.getLocation');
 Route::get('/login', 'LoginController@login')->middleware('guest')->name('login');
 Route::post('/login', 'LoginController@credentials')->middleware('guest')->name('credentials');
 Route::get('/logout', 'LoginController@logout')->middleware('auth')->name('logout');
@@ -19,6 +20,11 @@ Route::get('/register', 'LoginController@register')->middleware('guest')->name('
 Route::post('/register', 'LoginController@registerStore')->middleware('guest')->name('register.store');
 
 Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
+
+    // dashboard
+    Route::get('/dashboard', 'DashboardController@index')->middleware('auth')->name('admin.dashboard');
+    Route::post('/get-location', 'DashboardController@getLocation')->name('admin.getLocation');
+
     // category
     Route::prefix('category')->group(function () {
         Route::get('/index', 'CategoryController@index')->name('admin.category.index');
@@ -54,6 +60,4 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
         Route::post('/update', 'UserController@update')->name('admin.user.update');
         Route::post('/destroy', 'UserController@destroy')->name('admin.user.destroy');
     });
-
-    Route::post('/get-location', 'DashboardController@getLocation')->name('admin.getLocation');
 });

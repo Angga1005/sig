@@ -28,14 +28,14 @@ class LoginController extends Controller
             return redirect()->back()->withErrors(['error' => 'Email/Password Yang Anda Masukan Salah!']);
         }
 
-        return redirect()->route('dashboard');
+        return redirect()->route('admin.dashboard');
     }
     
     public function logout()
     {
         Auth::logout();
 
-        return redirect()->route('dashboard');;
+        return redirect()->route('admin.dashboard');;
     }
 
     public function register()

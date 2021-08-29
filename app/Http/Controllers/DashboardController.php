@@ -9,12 +9,17 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        return view('dashboard');
+        return view('admin.dashboard');
     }
 
     public function getLocation(Request $request)
     {
-        $query = PointOfInterest::all();
+        $query = '';
+        if (auth()->user()->id == 1) {
+            $query = PointOfInterest::all();
+        } else {
+            $query = PointOfInterest::where('created_by', auth()->user()->id)->get();
+        }
 
         return response()->json(['data' => $query]);
     }

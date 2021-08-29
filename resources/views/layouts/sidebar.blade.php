@@ -13,7 +13,7 @@
                 <span data-i18n="Apps &amp; Pages">Apps &amp; Pages</span><i data-feather="more-horizontal"></i>
             </li>
             <li class=" nav-item {{request()->is('/') ? 'active' : ''}}">
-                <a class="d-flex align-items-center" href="{{route('dashboard')}}">
+                <a class="d-flex align-items-center" href="{{route('admin.dashboard')}}">
                     <i data-feather="home"></i><span class="menu-title text-truncate" data-i18n="Dashboard">Dashboard</span>
                 </a>
             </li>

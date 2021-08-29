@@ -30,7 +30,7 @@
                     <h2 class="content-header-title float-left mb-0">User Admin</h2>
                     <div class="breadcrumb-wrapper">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="{{route('dashboard')}}">Dashboard</a></li>
+                            <li class="breadcrumb-item"><a href="{{route('admin.dashboard')}}">Dashboard</a></li>
                             <li class="breadcrumb-item">User</li>
                             <li class="breadcrumb-item active">User Admin</li>
                         </ol>

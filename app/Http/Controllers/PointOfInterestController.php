@@ -7,15 +7,23 @@ use Yajra\Datatables\Datatables;
 use App\Models\PointOfInterest;
 use App\Models\Category;
 use Validator;
+use Auth;
 
 class PointOfInterestController extends Controller
 {
     public function index(Request $request)
     {
+        $query = '';
+        if (auth()->user()->id == 1) {
+            $query = PointOfInterest::orderBy('id', 'DESC')->get();
+        } else {
+            $query = PointOfInterest::where('created_by', auth()->user()->id)->orderBy('id', 'DESC')->get();
+        }
+
         $categories = Category::orderBy('id')->get();
 
         if (request()->ajax()) {
-            return Datatables::of(PointOfInterest::orderBy('id', 'DESC')->get())
+            return Datatables::of($query)
                 ->addColumn('action', function($data){
                     return '<a class="btn btn-success" href="javascript:void(0)" id="edit" data-id="'.$data->id.'">Edit</a>
                             <a class="btn btn-danger" href="javascript:void(0)" id="delete" data-id="'.$data->id.'">Delete</a>';
@@ -51,6 +59,7 @@ class PointOfInterestController extends Controller
             'longitude' => $request->longitude,
             'latitude' => $request->latitude,
             'category_id' => $request->category_id,
+            'created_by' => auth()->user()->id
         ]);
 
         return response()->json(['success' => 'Data Added Successfully']);

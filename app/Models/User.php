@@ -41,4 +41,9 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Role::class);
     }
+
+    public function point_of_interest()
+    {
+        return $this->hasMany(PointOfInterest::class, 'created_by');
+    }
 }
