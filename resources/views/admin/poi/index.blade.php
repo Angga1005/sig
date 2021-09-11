@@ -107,6 +107,11 @@
                                 <input type="text" class="form-control longlat latitude_error" id="latitude" name="latitude" placeholder="Latitude" aria-label="Latitude" />
                                 <div class="invalid-feedback" id="latitude_error"></div>
                             </div>
+                            <div class="form-group">
+                                <label class="form-label" for="description">Description</label>
+                                <textarea class="form-control description_error" name="description" id="description" cols="30" rows="5"></textarea>
+                                <div class="invalid-feedback" id="description_error"></div>
+                            </div>
                             <button type="submit" class="btn btn-primary data-submit mr-1">Add</button>
                             <button type="button" class="btn btn-outline-secondary btn-cancel" data-dismiss="modal">Cancel</button>
                         </div>
@@ -273,6 +278,7 @@
                     $('#phone').val(resp.data.phone);
                     $('#longitude').val(resp.data.longitude);
                     $('#latitude').val(resp.data.latitude);
+                    $('#description').val(resp.data.description);
                     $('.modal-title').text('Edit Record');
                     $('.data-submit').text('Edit');
                     $('#form-modal').modal('show');
