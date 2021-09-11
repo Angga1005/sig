@@ -61,7 +61,8 @@ class PointOfInterestController extends Controller
             'longitude' => $request->longitude,
             'latitude' => $request->latitude,
             'category_id' => $request->category_id,
-            'created_by' => auth()->user()->id
+            'created_by' => auth()->user()->id,
+            'description' => $request->description
         ]);
 
         return response()->json(['success' => 'Data Added Successfully']);
@@ -98,7 +99,8 @@ class PointOfInterestController extends Controller
             'phone' => $request->phone,
             'longitude' => $request->longitude,
             'latitude' => $request->latitude,
-            'category_id' => $request->category_id
+            'category_id' => $request->category_id,
+            'description' => $request->description
         ]);
 
         return response()->json(['success' => 'Update Data Successfully']);

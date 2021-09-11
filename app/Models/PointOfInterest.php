@@ -14,7 +14,8 @@ class PointOfInterest extends Model
         'longitude',
         'latitude',
         'category_id',
-        'created_by'
+        'created_by',
+        'description'
     ];
 
     public function category()

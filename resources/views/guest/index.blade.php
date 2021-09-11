@@ -9,7 +9,7 @@
     <meta name="description" content="Vuexy admin is super flexible, powerful, clean &amp; modern responsive bootstrap 4 admin template with unlimited possibilities.">
     <meta name="keywords" content="admin template, Vuexy admin template, dashboard template, flat admin template, responsive admin template, web app">
     <meta name="author" content="PIXINVENT">
-    <title>Login</title>
+    <title>SIG</title>
     <link rel="apple-touch-icon" href="{{asset('asset/app-assets/images/ico/apple-icon-120.png')}}">
     <link rel="shortcut icon" type="image/x-icon" href="{{asset('asset/app-assets/images/ico/favicon.ico')}}">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500;1,600" rel="stylesheet">
@@ -76,6 +76,12 @@
                         </div>
                     </div>
                     <div id="mapid"></div>
+                    <div class="row">
+                        <div class="col-12">
+                            <h1>Deskripsi</h1>
+                            <p id="description"></p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -106,6 +112,14 @@
 
     <script>
         var mymap = L.map('mapid').setView([-6.954021, 107.5573539], 13);
+        var greenIcon = new L.Icon({
+            iconUrl: "img/marker-icon-green.png",
+            // shadowUrl: "img/marker-icon-green.png",
+            iconSize: [25, 41],
+            iconAnchor: [12, 41],
+            popupAnchor: [1, -34],
+            shadowSize: [41, 41]
+        });
         L.tileLayer('https://api.maptiler.com/maps/streets/{z}/{x}/{y}.png?key=qV9MVb9MCmtigCZVDpqs', {
             attribution: '<a href="https://www.maptiler.com/copyright/" target="_blank">&copy; MapTiler</a> <a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a>'
         }).addTo(mymap);
@@ -130,7 +144,7 @@
                 success: function (resp) {
                     $.each(resp.data, function(key, value) {
                         // console.log(value)
-                        var marker = L.marker([value.longitude, value.latitude]).addTo(mymap);
+                        var marker = L.marker([value.longitude, value.latitude], {icon: greenIcon}).addTo(mymap);
                         marker.bindPopup('<b>'+value.name+'.</b><br>'+value.address+'<br><a href="https://wa.me/'+value.phone+'/?text=Hallo admin" target="_blank">Contact</a>');
                     });
                 }
@@ -146,10 +160,6 @@
             });
         })
 
-        function markerOnClick()
-        {
-            window.location = "https://api.whatsapp.com/send?phone=6282126926506"
-        }
     </script>
 </body>
 <!-- END: Body-->
