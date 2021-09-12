@@ -57,10 +57,15 @@
         <div class="app-content content" style="margin-top: 32px;">
             <div class="content-wrapper">
                 <div class="content-header row">
-                    <div class="content-header-left col-md-9 col-12 mb-2">
+                    <div class="content-header-left col-md-12 col-12 mb-2">
                         <div class="row breadcrumbs-top">
-                            <div class="col-12">
+                            <div class="col-9">
                                 <h2 class="float-left mb-0">Sistem Informasi Geografis Kec.Margaasih</h2>
+                            </div>
+                            <div class="col-3">
+                                <div class="text-right">
+                                    <a href="{{route('login')}}" class="btn btn-primary btn-sm">Login</a>
+                                </div>
                             </div>
                         </div>
                     </div>
