@@ -8,7 +8,7 @@
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
 <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
 <style>
-    #mapid { height: 360px; }
+    #mapid { height: 420px; }
 </style>
 <div class="content-wrapper">
     <div class="content-header row">
@@ -66,8 +66,15 @@
                 method: "POST",
                 success: function (resp) {
                     $.each(resp.data, function(key, value) {
-                        // console.log(value)
-                        var marker = L.marker([value.longitude, value.latitude]).addTo(mymap);
+                        var greenIcon = new L.Icon({
+                            iconUrl: value.category.icon_url,
+                            // shadowUrl: "img/marker-icon-green.png",
+                            iconSize: [40, 41],
+                            iconAnchor: [12, 41],
+                            popupAnchor: [1, -34],
+                            shadowSize: [41, 41]
+                        });
+                        var marker = L.marker([value.longitude, value.latitude], {icon: greenIcon}).addTo(mymap);
                         marker.bindPopup("<b>"+value.name+".</b><br>"+value.address+"");
                     });
                 }

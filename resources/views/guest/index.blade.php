@@ -50,7 +50,7 @@
 
 <body class="vertical-layout vertical-menu-modern blank-page navbar-floating footer-static  " data-open="click" data-menu="vertical-menu-modern" data-col="blank-page">
     <style>
-        #mapid { height: 360px; }
+        #mapid { height: 520px; }
     </style>
     <!-- BEGIN: Content-->
     <div class="container">
@@ -75,13 +75,19 @@
                             </div>
                         </div>
                     </div>
-                    <div id="mapid"></div>
-                    <div class="row">
-                        <div class="col-12">
-                            <h1>Deskripsi</h1>
-                            <p id="description"></p>
+                    <form id="filter-category">
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="category_id" id="all" value="">
+                            <label class="form-check-label" for="all">All</label>
                         </div>
-                    </div>
+                        @foreach ($categories as $category)
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="category_id" id="{{$category->name}}" value="{{$category->id}}">
+                                <label class="form-check-label" for="{{$category->name}}">{{$category->name}}</label>
+                            </div>
+                        @endforeach
+                    </form>
+                    <div id="mapid"></div>
                 </div>
             </div>
         </div>
@@ -112,43 +118,45 @@
 
     <script>
         var mymap = L.map('mapid').setView([-6.954021, 107.5573539], 13);
-        var greenIcon = new L.Icon({
-            iconUrl: "img/marker-icon-green.png",
-            // shadowUrl: "img/marker-icon-green.png",
-            iconSize: [25, 41],
-            iconAnchor: [12, 41],
-            popupAnchor: [1, -34],
-            shadowSize: [41, 41]
-        });
         L.tileLayer('https://api.maptiler.com/maps/streets/{z}/{x}/{y}.png?key=qV9MVb9MCmtigCZVDpqs', {
             attribution: '<a href="https://www.maptiler.com/copyright/" target="_blank">&copy; MapTiler</a> <a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a>'
         }).addTo(mymap);
-        // var klinik = L.marker([-6.954021, 107.5573539]).addTo(mymap);
-        // klinik.bindPopup("<b>Ini adalah Klinik Angga Yudisman.</b>").openPopup();
-
-        // var apotek = L.marker([-6.9341465, 107.5433088]).addTo(mymap);
-        // apotek.bindPopup("<b>Ini adalah Apotek Angga Yudisman.</b>").openPopup();
 
         $(document).ready(function () {
             var _token = '{{ csrf_token() }}';
-            
+           
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': _token
                 }
             });
+           
+            $('input[type=radio][name=category_id]').change(function() {
+                var category_id = $(this).val();
+                $('.leaflet-marker-pane').empty();
+                
+                $.ajax({
+                    url: "{{route('guest.getLocation')}}",
+                    method: "POST",
+                    data: {category_id: category_id},
+                    success: function (resp) {
+                        console.log(resp.data);
+                        $.each(resp.data, function(key, value) {
+                            var greenIcon = new L.Icon({
+                                iconUrl: value.category.icon_url,
+                                // shadowUrl: "img/marker-icon-green.png",
+                                iconSize: [40, 41],
+                                iconAnchor: [12, 41],
+                                popupAnchor: [1, -34],
+                                shadowSize: [41, 41]
+                            });
+                            var marker = L.marker([value.longitude, value.latitude], {icon: greenIcon}).addTo(mymap);
+                            marker.bindPopup('<b>'+value.name+'.</b><br>'+value.address+'<br><a href="https://wa.me/'+value.phone+'/?text=Hallo admin" target="_blank">Contact</a><br><hr><span>'+value.description+'</span>');
+                        });
+                    }
+                })
+            });
 
-            $.ajax({
-                url: "{{route('guest.getLocation')}}",
-                method: "POST",
-                success: function (resp) {
-                    $.each(resp.data, function(key, value) {
-                        // console.log(value)
-                        var marker = L.marker([value.longitude, value.latitude], {icon: greenIcon}).addTo(mymap);
-                        marker.bindPopup('<b>'+value.name+'.</b><br>'+value.address+'<br><a href="https://wa.me/'+value.phone+'/?text=Hallo admin" target="_blank">Contact</a>');
-                    });
-                }
-            })
 
             $(function () {
                 $('#whatsapp').floatingWhatsApp({
@@ -159,7 +167,6 @@
                 });
             });
         })
-
     </script>
 </body>
 <!-- END: Body-->

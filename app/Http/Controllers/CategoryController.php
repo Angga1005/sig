@@ -26,7 +26,8 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         $rules = [
-            'name' => 'required'
+            'name' => 'required',
+            'icon_url' => 'required'
         ];
 
         $error = Validator::make($request->all(), $rules);
@@ -37,6 +38,7 @@ class CategoryController extends Controller
 
         Category::create([
             'name' => $request->name,
+            'icon_url' => $request->icon_url
         ]);
 
         return response()->json(['success' => 'Data Added Successfully']);
@@ -53,7 +55,8 @@ class CategoryController extends Controller
     public function update(Request $request)
     {
         $rules = [
-            'name' => 'required'
+            'name' => 'required',
+            'icon_url' => 'required'
         ];
 
         $error = Validator::make($request->all(), $rules);
@@ -64,7 +67,8 @@ class CategoryController extends Controller
 
         $category = Category::where('id', $request->hidden_id);
         $category->update([
-            'name' => $request->name
+            'name' => $request->name,
+            'icon_url' => $request->icon_url
         ]);
 
         return response()->json(['success' => 'Update Data Successfully']);
