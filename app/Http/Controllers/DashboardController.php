@@ -16,9 +16,9 @@ class DashboardController extends Controller
     {
         $query = '';
         if (auth()->user()->id == 1) {
-            $query = PointOfInterest::all();
+            $query = PointOfInterest::with('category')->get();
         } else {
-            $query = PointOfInterest::where('created_by', auth()->user()->id)->get();
+            $query = PointOfInterest::with('category')->where('created_by', auth()->user()->id)->get();
         }
 
         return response()->json(['data' => $query]);

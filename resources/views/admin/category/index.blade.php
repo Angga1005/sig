@@ -50,6 +50,7 @@
                                 <tr>
                                     <th>Id</th>
                                     <th>Name</th>
+                                    <th>Icon</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -71,6 +72,11 @@
                                 <label class="form-label" for="name">Name</label>
                                 <input type="text" class="form-control name_error" id="name" name="name" placeholder="Name" aria-label="Name" />
                                 <div class="invalid-feedback" id="name_error"></div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="icon_url">Icon URL</label>
+                                <input type="text" class="form-control icon_url_error" id="icon_url" name="icon_url" placeholder="Icon URL" aria-label="Icon URL" />
+                                <div class="invalid-feedback" id="icon_url_error"></div>
                             </div>
                             <button type="submit" class="btn btn-primary data-submit mr-1">Add</button>
                             <button type="button" class="btn btn-outline-secondary btn-cancel" data-dismiss="modal">Cancel</button>
@@ -111,12 +117,20 @@
                         },
                     },
                     {data: "name", name: "name", orderable: false},
+                    {
+                        data: "icon_url", 
+                        name: "icon_url", 
+                        render: function (data, type, full, meta) {
+                            return `<img src="${data}" width="50" class="img-responsive" />`;
+                        },
+                        orderable: false
+                    },
                     {data: "action", name: "action", orderable: false},
                 ],
                 columnDefs: [
                     { width: "10%", "targets": [0] },
-                    { width: "25%", "targets": [2] },
-                    { className: "text-center", "targets": [2] },
+                    { width: "25%", "targets": [3] },
+                    { className: "text-center", "targets": [3] },
                 ]
             });
             
@@ -229,6 +243,7 @@
                     console.log(resp);
                     $('#hidden_id').val(resp.data.id);
                     $('#name').val(resp.data.name);
+                    $('#icon_url').val(resp.data.icon_url);
                     $('.modal-title').text('Edit Record');
                     $('.data-submit').text('Edit');
                     $('#form-modal').modal('show');
