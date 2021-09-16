@@ -45,17 +45,11 @@ class LoginController extends Controller
 
     public function registerStore(Request $request)
     {
-        $rules = [
+        $this->validate($request, [
             'name' => 'required',
             'email' => 'required',
             'password' => 'required'
-        ];
-
-        $error = Validator::make($request->all(), $rules);
-
-        if ($error->fails()) {
-            return response()->json(['errors' => $error->messages()]);
-        }
+        ]);
 
         User::create([
             'name' => $request->name,
