@@ -90,12 +90,6 @@
                             <div class="col-12 col-sm-8 col-md-6 col-lg-12 px-xl-2 mx-auto">
                                 {{-- <h2 class="card-title font-weight-bold mb-1">Welcome to ! 👋</h2> --}}
                                 <p class="card-text mb-2">Please input data for register account</p>
-                                @if ($message = Session::get('success'))
-                                    <span class="text-success">{{$message}}</span>                       
-                                @endif
-                                @if($errors->any('error'))
-                                    <span class="text-danger">{{$errors->first('error')}}</span>
-                                @endif
                                 <form class="auth-login-form mt-2" action="{{ route('register.store') }}" method="POST">
                                     @csrf
                                     <div class="form-group">
