@@ -73,7 +73,7 @@
                         <div class="modal-body flex-grow-1">
                             <div class="form-group">
                                 <label class="form-label" for="category_id">Category</label>
-                                <select name="category_id" id="category_id" class="form-control category_id_error">
+                                <select name="category_id" id="category_id" class="form-control category_id_error" @if(auth()->user()->role_id == 2) readonly @endif>
                                     <option value="" selected disabled>Choose Category</option>
                                     @foreach ($categories as $cat)
                                         <option value="{{$cat->id}}">{{$cat->name}}</option>
@@ -88,7 +88,7 @@
                             </div>
                             <div class="form-group">
                                 <label class="form-label" for="address">Address</label>
-                                <input type="text" class="form-control address_error" id="address" name="address" placeholder="Address" aria-label="Address" />
+                                <input type="text" class="form-control address_error" id="address" name="address" placeholder="Address" aria-label="Address" @if(auth()->user()->role_id == 2) readonly @endif/>
                                 <div class="invalid-feedback" id="address_error"></div>
                             </div>
                             <div class="form-group">
@@ -99,12 +99,12 @@
                             </div>
                             <div class="form-group">
                                 <label class="form-label" for="longitude">Longitude</label>
-                                <input type="text" class="form-control longlat longitude_error" id="longitude" name="longitude" placeholder="Longitude" aria-label="Longitude" />
+                                <input type="text" class="form-control longlat longitude_error" id="longitude" name="longitude" placeholder="Longitude" aria-label="Longitude" @if(auth()->user()->role_id == 2) readonly @endif/>
                                 <div class="invalid-feedback" id="longitude_error"></div>
                             </div>
                             <div class="form-group">
                                 <label class="form-label" for="latitude">Latitude</label>
-                                <input type="text" class="form-control longlat latitude_error" id="latitude" name="latitude" placeholder="Latitude" aria-label="Latitude" />
+                                <input type="text" class="form-control longlat latitude_error" id="latitude" name="latitude" placeholder="Latitude" aria-label="Latitude" @if(auth()->user()->role_id == 2) readonly @endif/>
                                 <div class="invalid-feedback" id="latitude_error"></div>
                             </div>
                             <div class="form-group">
