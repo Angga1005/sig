@@ -13,17 +13,17 @@ class PointOfInterestController extends Controller
 {
     public function index(Request $request)
     {
-        $query = '';
-        if (auth()->user()->id == 1) {
-            $query = PointOfInterest::orderBy('id', 'DESC')->get();
-        } else {
-            $query = PointOfInterest::where('created_by', auth()->user()->id)->orderBy('id', 'DESC')->get();
-        }
+        // $query = '';
+        // if (auth()->user()->id == 1) {
+        //     $query = PointOfInterest::orderBy('id', 'DESC')->get();
+        // } else {
+        //     $query = PointOfInterest::where('created_by', auth()->user()->id)->orderBy('id', 'DESC')->get();
+        // }
 
         $categories = Category::orderBy('id')->get();
 
         if (request()->ajax()) {
-            return Datatables::of($query)
+            return Datatables::of(PointOfInterest::orderBy('id', 'DESC')->get())
                 ->addColumn('action', function($data){
                     return '<a class="btn btn-success" href="javascript:void(0)" id="edit" data-id="'.$data->id.'">Edit</a>
                             <a class="btn btn-danger" href="javascript:void(0)" id="delete" data-id="'.$data->id.'">Delete</a>';
@@ -80,10 +80,10 @@ class PointOfInterestController extends Controller
     {
         $rules = [
             'name' => 'required',
-            'address' => 'required',
+            // 'address' => 'required',
             'phone' => 'required',
-            'longitude' => 'required',
-            'latitude' => 'required'
+            // 'longitude' => 'required',
+            // 'latitude' => 'required'
         ];
 
         $error = Validator::make($request->all(), $rules);
