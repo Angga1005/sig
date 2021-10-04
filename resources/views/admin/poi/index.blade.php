@@ -39,7 +39,9 @@
         </div>
     </div>
     <div class="content-body">
-        <button class="btn btn-info mb-2" id="button-add">Add</button>
+        @if (auth()->user()->role_id == 1)
+            <button class="btn btn-info mb-2" id="button-add">Add</button>
+        @endif
         <!-- Basic table -->
         <section id="basic-datatable">
             <div class="row">
